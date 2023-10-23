@@ -23,7 +23,7 @@ namespace Dynamic_structures.Structures
     }
     public class DoublyLinkedList<T> : IEnumerable<T>
     {
-        private Node<T> head;
+        public Node<T> head;
         private Node<T> tail;
 
         private int count;
