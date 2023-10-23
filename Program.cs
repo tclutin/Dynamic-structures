@@ -1,10 +1,14 @@
-﻿namespace Dynamic_structures
+﻿using Dynamic_structures.Structures;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Dynamic_structures
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+
         }
     }
 }
