@@ -24,7 +24,7 @@ namespace Dynamic_structures.Structures
         {
             Node<object> item = top;
             top = top.Next;
-            stack.Remove(item);
+            stack.Remove(item.Data);
             return item;
         }
         public bool IsEmpty()

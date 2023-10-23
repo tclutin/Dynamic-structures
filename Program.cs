@@ -15,6 +15,8 @@ namespace Dynamic_structures
             stack.Push("hhhhhhhhh");
             stack.Push(99);
             stack.Print();
+            stack.Pop();
+            stack.Print();
         }
     }
 }
