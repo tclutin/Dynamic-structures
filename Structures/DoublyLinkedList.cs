@@ -26,7 +26,7 @@ namespace Dynamic_structures.Structures
         private Node<T> head;
         private Node<T> tail;
 
-        private int count {get; set;}
+        private int count;
 
         public DoublyLinkedList()
         {
@@ -35,7 +35,7 @@ namespace Dynamic_structures.Structures
             count = 0;
         }
 
-        public int Count()
+        public int Size()
         {
             return count;
         }
