@@ -26,13 +26,18 @@ namespace Dynamic_structures.Structures
         private Node<T> head;
         private Node<T> tail;
 
-        public int Count {get; set;}
+        private int count {get; set;}
 
         public DoublyLinkedList()
         {
             head = null;
             tail = null;
-            Count = 0;
+            count = 0;
+        }
+
+        public int Count()
+        {
+            return count;
         }
 
         public void AddLast(T data)
@@ -49,7 +54,7 @@ namespace Dynamic_structures.Structures
                 newNode.Previous = tail;
                 tail = newNode;
             }
-            Count++;
+            count++;
         }
 
         public void AddFirst(T data)
@@ -66,7 +71,7 @@ namespace Dynamic_structures.Structures
                 head.Previous = newNode;
                 head = newNode;
             }
-            Count++;
+            count++;
         }
 
         public void Remove(T data)
@@ -95,7 +100,7 @@ namespace Dynamic_structures.Structures
                     {
                         tail = current.Previous;
                     }
-                    Count--;
+                    count--;
                     return;
                 }
                 current = current.Next;

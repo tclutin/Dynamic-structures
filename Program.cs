@@ -8,7 +8,6 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
-
         }
     }
 }
