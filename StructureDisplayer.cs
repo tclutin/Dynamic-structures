@@ -64,7 +64,9 @@ namespace Dynamic_structures
                 Console.SetCursorPosition(cursorPositionX, i + cursorPositionY + 1);
                 Console.WriteLine(stackView[i]);
             }
+            //манипуляция чтобы описание команды не запрыгивало на следуюший стек
             cursorPositionX += (operationName.Length > stackView[0].Length) ? operationName.Length - stackView[0].Length : 0;
+            //здесь ищу самый длинный столбик чтобы потом перейти на следующую строку нормально
             lineHeight = Console.GetCursorPosition().Top > lineHeight ? Console.GetCursorPosition().Top : lineHeight;
             count++;
         }
