@@ -23,11 +23,15 @@ namespace Dynamic_structures.Structures
     }
     public class DoublyLinkedList<T> : IEnumerable<T>
     {
-        public Node<T> head;
+        private Node<T> head;
         private Node<T> tail;
 
         private int count;
 
+        public Node<T> getHead()
+        {
+            return head;
+        }
         public DoublyLinkedList()
         {
             head = null;

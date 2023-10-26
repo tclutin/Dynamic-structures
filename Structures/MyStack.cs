@@ -18,14 +18,14 @@ namespace Dynamic_structures.Structures
         public void Push(object item)
         {
             stack.AddFirst(item);
-            top = stack.head;
+            top = stack.getHead();
         }
         public object Pop()
         {
             Node<object> item = top;
             top = top.Next;
             stack.Remove(item.Data);
-            return item;
+            return item.Data;
         }
         public bool IsEmpty()
         {
@@ -35,7 +35,8 @@ namespace Dynamic_structures.Structures
         {
             Console.WriteLine(CreateStackView());
         }
-        private StringBuilder CreateStackView()
+        
+        public StringBuilder CreateStackView()
         {
             StringBuilder builder= new StringBuilder();
             int columnWidth = FindColumnWidth();
@@ -51,7 +52,8 @@ namespace Dynamic_structures.Structures
             builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
             return builder;
         }
-        private int FindColumnWidth()
+
+        public int FindColumnWidth()
         {
             int width = 0;
             foreach(object item in stack)

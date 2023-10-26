@@ -8,15 +8,16 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
-            MyStack stack = new MyStack();
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push("cotik");
-            stack.Push("hhhhhhhhh");
-            stack.Push(99);
-            stack.Print();
-            stack.Pop();
-            stack.Print();
+            List<Operation> operations = new List<Operation>();
+            operations.Add(new Operation(1, 3));
+            operations.Add(new Operation(1, "cat"));
+            operations.Add(new Operation(1, 11827));
+            operations.Add(new Operation(2));
+            operations.Add(new Operation(3));
+            operations.Add(new Operation(4));
+            operations.Add(new Operation(5));
+            StructureDisplayer displayer = new StructureDisplayer(operations);
+            displayer.Invoke();
         }
     }
 }
