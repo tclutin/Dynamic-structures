@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dynamic_structures.Structures;
 
 namespace Dynamic_structures
 {
     public class StructureDisplayer
     {
         public List<Operation> commands;
-        private MyStack stack = new MyStack();
+        private IStructure structure;
         private int cursorPositionX = -8;
         private int cursorPositionY = 0;
         private int lineHeight = 0;
         private int count;
-        public StructureDisplayer(List<Operation> commands) 
+        public StructureDisplayer(List<Operation> commands, IStructure structure) 
         {
             this.commands = commands;
+            this.structure = structure;
         }
 
         public void Invoke()
@@ -33,30 +33,30 @@ namespace Dynamic_structures
             switch(operation.Number) 
             {
                 case 1:
-                    stack.Push(operation.Data);
-                    PrintStack("Push " + operation.Data);
+                    structure.Push(operation.Data);
+                    PrintStructure("Push " + operation.Data);
                     break;
                 case 2:
-                    object pop = stack.Pop();
-                    PrintStack("Pop = " + pop);
+                    object pop = structure.Pop();
+                    PrintStructure("Pop = " + pop);
                     break;
                 case 3:
-                    object top = stack.Top();
-                    PrintStack("Top = " + top);
+                    object top = structure.Top();
+                    PrintStructure("Top = " + top);
                     break;
                 case 4:
-                    bool isEmpty = stack.IsEmpty();
-                    PrintStack("IsEmpty: " + isEmpty);
+                    bool isEmpty = structure.IsEmpty();
+                    PrintStructure("IsEmpty: " + isEmpty);
                     break;
                 case 5:
-                    PrintStack("Print");
+                    PrintStructure("Print");
                     break;
             }
         }
 
-        private void PrintStack(string operationName)
+        private void PrintStructure(string operationName)
         {
-            string[] stackView = stack.CreateStackView().ToString().Split('\n');
+            string[] stackView = CreateView(structure).ToString().Split('\n');
             Console.SetCursorPosition(cursorPositionX, cursorPositionY);
             Console.Write(operationName);
             for (int i = 0; i < stackView.Length; i++)
@@ -72,13 +72,41 @@ namespace Dynamic_structures
         }
         private void SetCursor() 
         {
-            cursorPositionX += stack.FindColumnWidth() + 8;
+            cursorPositionX += FindColumnWidth(structure) + 8;
             if (count == 5) //если уже отрисовалось пять стеков в строке
             {
                 cursorPositionY += lineHeight;
                 cursorPositionX = 0;
                 count = 0;
             }
+        }
+        public static StringBuilder CreateView(IStructure structure)
+        {
+            StringBuilder builder = new StringBuilder();
+            int columnWidth = FindColumnWidth(structure);
+            int countLines = 0;
+            builder.AppendLine("┌" + new string('─', columnWidth + 2) + "┐");
+            foreach (object item in structure.List)
+            {
+                countLines++;
+                builder.AppendLine("│ " + item.ToString().PadLeft(columnWidth) + " │");
+                if (countLines == structure.Size()) { break; }
+                builder.AppendLine("├" + new string('─', columnWidth + 2) + "┤");
+            }
+            builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
+            return builder;
+        }
+        public static int FindColumnWidth(IStructure structure)
+        {
+            int width = 0;
+            foreach (object item in structure.List)
+            {
+                if (item.ToString().Length > width)
+                {
+                    width = item.ToString().Length;
+                }
+            }
+            return width;
         }
     }
 }

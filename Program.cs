@@ -16,7 +16,7 @@ namespace Dynamic_structures
             operations.Add(new Operation(3));
             operations.Add(new Operation(4));
             operations.Add(new Operation(5));
-            StructureDisplayer displayer = new StructureDisplayer(operations);
+            StructureDisplayer displayer = new StructureDisplayer(operations, new MyStack());
             displayer.Invoke();
         }
     }

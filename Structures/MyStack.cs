@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace Dynamic_structures.Structures
 {
-    public class MyStack
+    public class MyStack : IStructure
     {
-        private DoublyLinkedList<object> stack = new DoublyLinkedList<object>();
+        public DoublyLinkedList<object> List { get; }
         private Node<object> top = null;
+        public int Size()
+        {
+            return List.Size();
+        }
+        public MyStack() 
+        {
+            List = new DoublyLinkedList<object>();
+        }
 
         public object Top()
         {
@@ -17,36 +25,37 @@ namespace Dynamic_structures.Structures
         }
         public void Push(object item)
         {
-            stack.AddFirst(item);
-            top = stack.getHead();
+            List.AddFirst(item);
+            top = List.getHead();
         }
         public object Pop()
         {
             Node<object> item = top;
             top = top.Next;
-            stack.Remove(item.Data);
+            List.Remove(item.Data);
             return item.Data;
         }
         public bool IsEmpty()
         {
-            return stack.Size() == 0;
+            return List.Size() == 0;
         }
         public void Print()
         {
-            Console.WriteLine(CreateStackView());
+            StringBuilder view = StructureDisplayer.CreateView(this);
+            Console.WriteLine(view);
         }
         
         public StringBuilder CreateStackView()
         {
             StringBuilder builder= new StringBuilder();
-            int columnWidth = FindColumnWidth();
+            int columnWidth = StructureDisplayer.FindColumnWidth(this);
             int countLines = 0;
             builder.AppendLine("┌" + new string('─', columnWidth + 2) + "┐");
-            foreach (object item in stack)
+            foreach (object item in List)
             {
                 countLines++;
                 builder.AppendLine("│ " + item.ToString().PadLeft(columnWidth) + " │");
-                if(countLines == stack.Size()) { break;}
+                if(countLines == List.Size()) { break;}
                 builder.AppendLine("├" + new string('─', columnWidth + 2) + "┤");
             }
             builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
@@ -56,7 +65,7 @@ namespace Dynamic_structures.Structures
         public int FindColumnWidth()
         {
             int width = 0;
-            foreach(object item in stack)
+            foreach(object item in List)
             {
                 if (item.ToString().Length > width)
                 {
