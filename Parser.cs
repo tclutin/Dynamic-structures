@@ -6,18 +6,6 @@ using System.Threading.Tasks;
 
 namespace Dynamic_structures
 {
-    public class Operation
-    {
-        public int Number { get; }
-        public object Data { get; }
-
-        public Operation(int number, object data = null)
-        {
-            Number = number;
-            Data = data;
-        }
-    }
-
     public static class Parser
     {
         public static List<Operation> Parse(string path)
@@ -57,4 +45,16 @@ namespace Dynamic_structures
             return operations;
         }
     }
+    public class Operation
+    {
+        public int Number { get; }
+        public object Data { get; }
+
+        public Operation(int number, object data = null)
+        {
+            Number = number;
+            Data = data;
+        }
+    }
+
 }

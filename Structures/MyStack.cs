@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dynamic_structures.Structures
 {
-    public class MyStack : IStructure
+    public class MyStack : IStructureV1
     {
         public DoublyLinkedList<object> List { get; }
         private Node<object> top = null;

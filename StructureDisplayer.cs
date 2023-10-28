@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dynamic_structures.Structures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,12 @@ namespace Dynamic_structures
     public class StructureDisplayer
     {
         public List<Operation> commands;
-        private IStructure structure;
+        private IStructureV1 structure;
         private int cursorPositionX = -8;
         private int cursorPositionY = 0;
         private int lineHeight = 0;
         private int count;
-        public StructureDisplayer(List<Operation> commands, IStructure structure) 
+        public StructureDisplayer(List<Operation> commands, IStructureV1 structure) 
         {
             this.commands = commands;
             this.structure = structure;
@@ -80,7 +81,7 @@ namespace Dynamic_structures
                 count = 0;
             }
         }
-        public static StringBuilder CreateView(IStructure structure)
+        public static StringBuilder CreateView(IStructureV1 structure)
         {
             StringBuilder builder = new StringBuilder();
             int columnWidth = FindColumnWidth(structure);
@@ -96,7 +97,7 @@ namespace Dynamic_structures
             builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
             return builder;
         }
-        public static int FindColumnWidth(IStructure structure)
+        public static int FindColumnWidth(IStructureV1 structure)
         {
             int width = 0;
             foreach (object item in structure.List)

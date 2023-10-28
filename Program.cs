@@ -10,10 +10,8 @@ namespace Dynamic_structures
         {
             var x = Parser.Parse("input.txt");
 
-            foreach (var item in x)
-            {
-                Console.WriteLine($"{item.Number} {item.Data}");
-            }
+            MyQueue queue = new MyQueue();
+            queue.Draw(x);
         }
     }
 }
