@@ -8,22 +8,12 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
-            MyQueue hello = new MyQueue();
+            var x = Parser.Parse("input.txt");
 
-
-            hello.Enqueue("wqewqweq");
-            hello.Enqueue("цйу");
-            hello.Enqueue(1);
-            hello.Enqueue(1);
-            hello.Enqueue(121231231);
-            hello.Dequeue();
-            hello.Dequeue();
-
-
-            Console.WriteLine(hello.GetFirst());
-            hello.Print();
-
-
+            foreach (var item in x)
+            {
+                Console.WriteLine($"{item.Number} {item.Data}");
+            }
         }
     }
 }
