@@ -8,16 +8,22 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
-            List<Operation> operations = new List<Operation>();
-            operations.Add(new Operation(1, 3));
-            operations.Add(new Operation(1, "cat"));
-            operations.Add(new Operation(1, 11827));
-            operations.Add(new Operation(2));
-            operations.Add(new Operation(3));
-            operations.Add(new Operation(4));
-            operations.Add(new Operation(5));
-            StructureDisplayer displayer = new StructureDisplayer(operations, new MyStack());
-            displayer.Invoke();
+            MyQueue hello = new MyQueue();
+
+
+            hello.Enqueue("wqewqweq");
+            hello.Enqueue("цйу");
+            hello.Enqueue(1);
+            hello.Enqueue(1);
+            hello.Enqueue(121231231);
+            hello.Dequeue();
+            hello.Dequeue();
+
+
+            Console.WriteLine(hello.GetFirst());
+            hello.Print();
+
+
         }
     }
 }
