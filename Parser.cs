@@ -18,7 +18,7 @@ namespace Dynamic_structures
         }
     }
 
-    public static class Parser
+    public class Parser
     {
         public static List<Operation> Parse(string path)
         {
