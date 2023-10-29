@@ -14,16 +14,19 @@ namespace Dynamic_structures
         private static string[] operations = {"+", "-", "*", "/", "^", "ln", "cos", "sin", "sqrt" };
         private List<string> expression;
         private MyStack stack;
-        private bool state;
 
-        public PostfixCalculator(List<string> expression) 
-        { 
-            stack = new MyStack();
-            this.expression = expression;
-        }
-        public void Invoke()
+        public void Calculate(List<string> expression, bool isInfix)
         {
-            if(!CheckExpression())
+            stack= new MyStack();
+            this.expression = expression;
+            if (isInfix) //true если выражение в инфиксной форме
+            {
+                if (!CheckInfixExpression()) return;
+                if (!CheckPostfixExpression()) return;
+                Console.Write("Выражение в постфиксной форме: ");
+                PrintInfix();
+            }
+            else if (!CheckPostfixExpression())
             {
                 return;
             }
@@ -101,7 +104,87 @@ namespace Dynamic_structures
                     throw new Exception();
             }
         }
-        private bool CheckExpression()
+        public void CalculateInfix()
+        {
+            List<string> list = new List<string>();
+            stack = new MyStack();
+
+            for(int i = 0; i < expression.Count; i++)
+            {
+                if (double.TryParse(expression[i], out double element))
+                {
+                    list.Add(element.ToString());
+                }
+                else if (expression[i] == "(" || expression[i] == ")")
+                {
+                    CheckBrackets(list, expression[i]);
+                }
+                else if (IsOperator(expression[i]))
+                {
+                    while (!stack.IsEmpty() && GetPriority(expression[i]) <= GetPriority(stack.Top().ToString()))
+                    {
+                        list.Add(stack.Pop().ToString());
+                    }
+                    stack.Push(expression[i]);
+                }
+                else throw new Exception();
+            }
+            while (!stack.IsEmpty())
+            {
+                list.Add(stack.Pop().ToString());
+            }
+            expression = list;
+        }
+        private int GetPriority(string s)
+        {
+            switch (s)
+            {
+                case "(": return 0;
+                case ")": return 1;
+                case "+": return 2;
+                case "-": return 3;
+                case "*": return 4;
+                case "/": return 4;
+                case "^": return 5;
+                case "cos": return 6;
+                case "sin": return 6;
+                case "ln": return 6;
+                case "sqrt": return 6;
+                default: return 6;
+            }
+        }
+        private void CheckBrackets(List<string> list, string op)
+        {
+            if(op == "(")
+            {
+                stack.Push(op);
+            }
+            else if (op == ")")
+            {
+                string x = stack.Pop().ToString();
+                while(x != "(")
+                {
+                    list.Add(x);
+                    x = stack.Pop().ToString();
+                }
+            }
+        }
+
+        private bool CheckInfixExpression()
+        {
+            try
+            {
+                CalculateInfix();
+            }
+            catch
+            {
+                Console.WriteLine("Некорректное выражение");
+                return false;
+            }
+            return true;
+        }
+
+        private bool CheckPostfixExpression()
         {
             if (expression == null) return false;
             for (int i = 0; i < expression.Count; i++)
@@ -137,6 +220,14 @@ namespace Dynamic_structures
                 return true;
             }
             return false;
+        }
+        private void PrintInfix()
+        {
+            foreach(string element in expression)
+            {
+                Console.Write(element+ " ");
+            }
+            Console.WriteLine();
         }
     }
 }
