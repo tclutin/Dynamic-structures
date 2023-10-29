@@ -44,6 +44,21 @@ namespace Dynamic_structures
             }
             return operations;
         }
+        public static List<string>? ParseExpression(string path)
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(path);
+                string? stringFromFile = reader.ReadLine();
+                string[] commands = stringFromFile.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                return commands.ToList();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Файл не найден или пуст");
+                return null;
+            }
+        }
     }
     public class Operation
     {

@@ -19,8 +19,12 @@ namespace Dynamic_structures.Structures
             List = new DoublyLinkedList<object>();
         }
 
-        public object Top()
+        public object? Top()
         {
+            if (IsEmpty())
+            {
+                return null;
+            }
             return top.Data;
         }
         public void Push(object item)
@@ -28,8 +32,12 @@ namespace Dynamic_structures.Structures
             List.AddFirst(item);
             top = List.getHead();
         }
-        public object Pop()
+        public object? Pop()
         {
+            if (IsEmpty())
+            {
+                return null;
+            }
             Node<object> item = top;
             top = top.Next;
             List.Remove(item.Data);

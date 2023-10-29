@@ -23,10 +23,12 @@ namespace Dynamic_structures
 
         public void Invoke()
         {
-            foreach(Operation operation in commands)
+            int iteration = 0;
+            while(commands.Count > 0 && iteration < commands.Count) 
             {
                 SetCursor();
-                DoOperation(operation);
+                DoOperation(commands[iteration]);
+                iteration++;
             }
         }
         private void DoOperation(Operation operation)
@@ -39,6 +41,11 @@ namespace Dynamic_structures
                     break;
                 case 2:
                     object pop = structure.Pop();
+                    if(pop == null) 
+                    {
+                        Stop("The stack is empty, cannot Pop");
+                        return; 
+                    }
                     PrintStructure("Pop = " + pop);
                     break;
                 case 3:
@@ -53,6 +60,14 @@ namespace Dynamic_structures
                     PrintStructure("Print");
                     break;
             }
+        }
+        private void Stop(string message)
+        {
+            Console.SetCursorPosition(cursorPositionX, cursorPositionY);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(message);
+            Console.ForegroundColor = ConsoleColor.White;
+            commands.Clear();
         }
 
         private void PrintStructure(string operationName)
@@ -76,7 +91,7 @@ namespace Dynamic_structures
             cursorPositionX += FindColumnWidth(structure) + 8;
             if (count == 5) //если уже отрисовалось пять стеков в строке
             {
-                cursorPositionY += lineHeight;
+                cursorPositionY = lineHeight;
                 cursorPositionX = 0;
                 count = 0;
             }
