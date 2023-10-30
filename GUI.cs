@@ -55,15 +55,16 @@ namespace Dynamic_structures
                     SubMenu = new List<Item>
                     {
                         new Item("Gеt data from a file"),
-                        new Item("Enter the command"),
+                        new Item("Еnter the command"),
                         new Item("Back")
                     }
                 },
+                new Item("calc"),
+
                 new Item("Exit")
             };
 
         }
-
 
         public void Start()
         {
@@ -148,6 +149,7 @@ namespace Dynamic_structures
             
             switch (itemName)
             {
+                //stack
                 case "Get data from a file":
                     try
                     {
@@ -181,13 +183,20 @@ namespace Dynamic_structures
                     Console.ReadKey();
                     break;
 
+                //queue
                 case "Gеt data from a file":
-                    Console.Write("Enter the path to the file: ");
-                    List<Operation> operationsOfqueue = Parser.Parse(Console.ReadLine());
-                    Console.Clear();
+                    try
+                    {
+                        Console.Write("Enter the path to the file: ");
+                        List<Operation> operationsOfqueue = Parser.Parse(Console.ReadLine());
+                        Console.Clear();
 
-                    MyQueue queue = new MyQueue();
-                    queue.Draw(operationsOfqueue);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
                     Console.ReadKey();
                     break;
                 default:
@@ -203,42 +212,6 @@ namespace Dynamic_structures
             displayer.Invoke();
         }
 
-        public void PerformStackOperation(int operation, MyStack stack)
-        {
-            switch (operation)
-            {
-                case 1:
-                    Console.Write("Enter an element: ");
-                    object value = Console.ReadLine();
-                    if (value == "")
-                    {
-                        KPrint("Invalid Data");
-                        break;
-                    }
-
-                    object element = value;
-
-                    stack.Push(element);
-                    KPrint($"'{element}' was pushed");
-                    break;
-                case 2:
-                    KPrint($"Pop: {stack.Pop()}");
-                    break;
-                case 3:
-                    KPrint($"Top: {stack.Top()}");
-                    break;
-                case 4:
-                    KPrint($"IsEmpty: {stack.IsEmpty()}");
-                    break;
-                case 5:
-                    stack.Print();
-                    Console.ReadKey();
-                    break;
-                default:
-                    KPrint("Invalid option");
-                    break;
-            }
-        }
 
         public void KPrint(string? value)
         {
