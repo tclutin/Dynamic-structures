@@ -49,38 +49,10 @@ namespace Dynamic_structures.Structures
         }
         public void Print()
         {
-            StringBuilder view = StructureDisplayer.CreateView(this);
-            Console.WriteLine(view);
-        }
-        
-        public StringBuilder CreateStackView()
-        {
-            StringBuilder builder= new StringBuilder();
-            int columnWidth = StructureDisplayer.FindColumnWidth(this);
-            int countLines = 0;
-            builder.AppendLine("┌" + new string('─', columnWidth + 2) + "┐");
-            foreach (object item in List)
-            {
-                countLines++;
-                builder.AppendLine("│ " + item.ToString().PadLeft(columnWidth) + " │");
-                if(countLines == List.Size()) { break;}
-                builder.AppendLine("├" + new string('─', columnWidth + 2) + "┤");
-            }
-            builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
-            return builder;
-        }
-
-        public int FindColumnWidth()
-        {
-            int width = 0;
             foreach(object item in List)
             {
-                if (item.ToString().Length > width)
-                {
-                    width = item.ToString().Length; 
-                }
+                Console.WriteLine(item.ToString()); 
             }
-            return width;
         }
     }
 }

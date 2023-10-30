@@ -1,27 +1,34 @@
 ﻿using Dynamic_structures.Structures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Dynamic_structures
 {
     public class StructureDisplayer
     {
         public List<Operation> commands;
-        private IStructureV1 structure;
+        private MyStack stack;
+        private MyQueue queue;
         private int cursorPositionX = -8;
         private int cursorPositionY = 0;
         private int lineHeight = 0;
         private int count;
-        public StructureDisplayer(List<Operation> commands, IStructureV1 structure) 
+        public StructureDisplayer(List<Operation> commands, MyStack structure) 
         {
             this.commands = commands;
-            this.structure = structure;
+            this.stack = structure;
+        }
+        public StructureDisplayer(List<Operation> commands, MyQueue queue)
+        {
+            this.commands = commands;
+            this.queue = queue;
+        }
+        public StructureDisplayer(MyStack stack)
+        {
+            this.stack = stack;
+            cursorPositionY = 3;
         }
 
-        public void Invoke()
+        public void InvokeStack()
         {
             int iteration = 0;
             while(commands.Count > 0 && iteration < commands.Count) 
@@ -31,33 +38,38 @@ namespace Dynamic_structures
                 iteration++;
             }
         }
+        public void InvokeCalculator(string operationName)
+        {
+            SetCursor();
+            PrintStack(operationName);
+        }
         private void DoOperation(Operation operation)
         {
             switch(operation.Number) 
             {
                 case 1:
-                    structure.Push(operation.Data);
-                    PrintStructure("Push " + operation.Data);
+                    stack.Push(operation.Data);
+                    PrintStack("Push " + operation.Data);
                     break;
                 case 2:
-                    object pop = structure.Pop();
+                    object pop = stack.Pop();
                     if(pop == null) 
                     {
                         Stop("The stack is empty, cannot Pop");
                         return; 
                     }
-                    PrintStructure("Pop = " + pop);
+                    PrintStack("Pop = " + pop);
                     break;
                 case 3:
-                    object top = structure.Top();
-                    PrintStructure("Top = " + top);
+                    object top = stack.Top();
+                    PrintStack("Top = " + top);
                     break;
                 case 4:
-                    bool isEmpty = structure.IsEmpty();
-                    PrintStructure("IsEmpty: " + isEmpty);
+                    bool isEmpty = stack.IsEmpty();
+                    PrintStack("IsEmpty: " + isEmpty);
                     break;
                 case 5:
-                    PrintStructure("Print");
+                    PrintStack("Print");
                     break;
             }
         }
@@ -70,9 +82,9 @@ namespace Dynamic_structures
             commands.Clear();
         }
 
-        private void PrintStructure(string operationName)
+        private void PrintStack(string operationName)
         {
-            string[] stackView = CreateView(structure).ToString().Split('\n');
+            string[] stackView = CreateStackView().ToString().Split('\n');
             Console.SetCursorPosition(cursorPositionX, cursorPositionY);
             Console.Write(operationName);
             for (int i = 0; i < stackView.Length; i++)
@@ -80,42 +92,51 @@ namespace Dynamic_structures
                 Console.SetCursorPosition(cursorPositionX, i + cursorPositionY + 1);
                 Console.WriteLine(stackView[i]);
             }
-            //манипуляция чтобы описание команды не запрыгивало на следуюший стек
             cursorPositionX += (operationName.Length > stackView[0].Length) ? operationName.Length - stackView[0].Length : 0;
-            //здесь ищу самый длинный столбик чтобы потом перейти на следующую строку нормально
             lineHeight = Console.GetCursorPosition().Top > lineHeight ? Console.GetCursorPosition().Top : lineHeight;
             count++;
         }
+        private void PrintQueue(string operationName)
+        {
+
+        }
         private void SetCursor() 
         {
-            cursorPositionX += FindColumnWidth(structure) + 8;
-            if (count == 5) //если уже отрисовалось пять стеков в строке
+            cursorPositionX += FindColumnWidth() + 8;
+            if (count == 5)
             {
                 cursorPositionY = lineHeight;
                 cursorPositionX = 0;
                 count = 0;
             }
         }
-        public static StringBuilder CreateView(IStructureV1 structure)
+        private StringBuilder CreateStackView()
         {
             StringBuilder builder = new StringBuilder();
-            int columnWidth = FindColumnWidth(structure);
+            int columnWidth = FindColumnWidth();
             int countLines = 0;
             builder.AppendLine("┌" + new string('─', columnWidth + 2) + "┐");
-            foreach (object item in structure.List)
+            foreach (object item in stack.List)
             {
                 countLines++;
                 builder.AppendLine("│ " + item.ToString().PadLeft(columnWidth) + " │");
-                if (countLines == structure.Size()) { break; }
+                if (countLines == stack.Size()) { break; }
                 builder.AppendLine("├" + new string('─', columnWidth + 2) + "┤");
             }
             builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
             return builder;
         }
-        public static int FindColumnWidth(IStructureV1 structure)
+
+        //private StringBuilder CreateQueueView()
+        //{
+        //    StringBuilder builder = new StringBuilder();
+
+        //}
+
+        public int FindColumnWidth()
         {
             int width = 0;
-            foreach (object item in structure.List)
+            foreach (object item in stack.List)
             {
                 if (item.ToString().Length > width)
                 {
