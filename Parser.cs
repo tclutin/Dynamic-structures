@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,40 +13,65 @@ namespace Dynamic_structures
         {
             List<Operation> operations = new List<Operation>();
 
-            try
-            {
-                using (StreamReader reader = new StreamReader(path))
+            using(StreamReader reader = new StreamReader(path))
                 {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] commands = line.Split();
+                    foreach (string command in commands)
                     {
-                        string[] commands = line.Split();
-                        foreach (string command in commands)
+                        string[] parts = command.Split(',');
+                        int operation = int.Parse(parts[0]);
+                        if (operation < 1 || operation > 5)
                         {
-                            if (command.Contains(","))
-                            {
-                                string[] parts = command.Split(',');
-                                int operation = int.Parse(parts[0]);
-                                object value = parts[1];
-                                operations.Add(new Operation(operation, value));
-                            }
-                            else
-                            {
-                                int operation = int.Parse(command);
-                                operations.Add(new Operation(operation));
-                            }
+                            throw new Exception("[1, 5] is range of operations");
+                        }
+
+
+                        if (command.Contains(","))
+                        {
+                            object value = parts[1];
+                            operations.Add(new Operation(operation, value));
+                        }
+                        else
+                        {
+                            int oper = int.Parse(command);
+                            operations.Add(new Operation(operation));
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                Console.ReadKey();
+            return operations;
+        }
 
+        public static List<Operation> ParseStr(string line)
+        {
+            List<Operation> operations = new List<Operation>();
+            string[] commands = line.Split();
+            foreach (string command in commands)
+            {
+                string[] parts = command.Split(',');
+                int operation = int.Parse(parts[0]);
+                if (operation < 1 || operation > 5)
+                {
+                    throw new Exception("[1, 5] is range of operations");
+                }
+
+                if (command.Contains(","))
+                {
+                    object value = parts[1];
+                    operations.Add(new Operation(operation, value));
+                }
+                else
+                {
+                    int oper = int.Parse(command);
+                    operations.Add(new Operation(operation));
+                }
             }
             return operations;
         }
+
         public static List<string>? ParseExpression(string path)
         {
             try
@@ -57,7 +83,7 @@ namespace Dynamic_structures
             }
             catch (Exception)
             {
-                Console.WriteLine("Файл не найден или пуст");
+                Console.WriteLine("File doesn't exist");
                 return null;
             }
         }

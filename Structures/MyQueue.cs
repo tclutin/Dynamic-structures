@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dynamic_structures.Structures
 {
-    public class MyQueue : IStructureV2
+    public class MyQueue
     {
         private DoublyLinkedList<object> list { get; }
 

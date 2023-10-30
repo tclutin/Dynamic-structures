@@ -36,6 +36,10 @@ namespace Dynamic_structures
             switch(operation.Number) 
             {
                 case 1:
+                    if (operation.Data == null)
+                    {
+                        throw new Exception("You need to set a value for push operation");
+                    }
                     structure.Push(operation.Data);
                     PrintStructure("Push " + operation.Data);
                     break;

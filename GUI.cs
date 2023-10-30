@@ -29,8 +29,12 @@ namespace Dynamic_structures
 
         private MyStack stack;
 
+        private MyQueue queue;
+
         public GUI()
         {
+            queue = new MyQueue();
+
             stack = new MyStack();
 
             selectedOption = 0;
@@ -42,7 +46,7 @@ namespace Dynamic_structures
                     SubMenu = new List<Item>
                     {
                         new Item("Get data from a file"),
-                        new Item("Enter the command manually"),
+                        new Item("Enter the command"),
                         new Item("Back")
                     }
                 },
@@ -50,8 +54,8 @@ namespace Dynamic_structures
                 {
                     SubMenu = new List<Item>
                     {
-                        new Item("Добавить элемент в очередь"),
-                        new Item("Извлечь элемент из очереди"),
+                        new Item("Gеt data from a file"),
+                        new Item("Enter the command"),
                         new Item("Back")
                     }
                 },
@@ -110,23 +114,34 @@ namespace Dynamic_structures
                 }
             }
         }
+        
+        public void PrintLogo()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            string logo = "  ____   _        ____   _   _   _  \r\n / ___| | |      / ___| | | | | | | \r\n| |  _  | |     | |  _  | | | | | | \r\n| |_| | | |___  | |_| | | |_| | | | \r\n \\____| |_____|  \\____|  \\___/  |_| \n\n";
+            Console.WriteLine(logo);
+            Console.ResetColor();
+        }
 
         public void DrawMenu(List<Item> options)
         {
             for (int i = 0; i < options.Count; i++)
             {
-
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("-> ");
+                Console.ResetColor();
                 if (i == selectedOption)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.White;
                 }
-                Console.WriteLine("-> " + options[i].Name); 
+
+
+                Console.WriteLine(options[i].Name); 
                 Console.ResetColor();
             }
         }
        
-
         public void RunSelectedFunction(string itemName)
         {
             Console.Clear();
@@ -134,32 +149,58 @@ namespace Dynamic_structures
             switch (itemName)
             {
                 case "Get data from a file":
-                    Console.Write("Enter the path to the file: ");
-                    List<Operation> operations = Parser.Parse(Console.ReadLine());
-                    Console.Clear();
-
-                    StructureDisplayer displayer = new StructureDisplayer(operations, new MyStack());
-                    displayer.Invoke();
+                    try
+                    {
+                        Console.Write("Enter the path to the file: ");
+                        List<Operation> operationsOfStack = Parser.Parse(Console.ReadLine());
+                        Console.Clear();
+                        StructureDisplayer displayer = new StructureDisplayer(operationsOfStack, new MyStack());
+                        displayer.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
                     Console.ReadKey();
                     break;
-                case "Enter the command manually":
-                    
-                    string output = "[1] Push\n[2] Pop\n[3] Top\n[4] IsEmpty\n[5] Print\n";
-                    Console.WriteLine(output);
-
-                    Console.Write("Enter a nubmer of commands: ");
-                    if (!int.TryParse(Console.ReadLine(), out int value))
+                case "Enter the command":
+                    try
                     {
-                        KPrint("Invalid Data");
-                        break;
+                        string output = "Operations\n[1] Push\n[2] Pop\n[3] Top\n[4] IsEmpty\n[5] Print\n";
+                        Console.WriteLine(output);
+                        Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
+                        string input = Console.ReadLine();
+                        Console.Clear();
+                        PerformStackOperation(input, stack);
                     }
-                    PerformStackOperation(value, stack);
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    Console.ReadKey();
                     break;
 
-                case "2":
-                    KPrint("Invalid option");
+                case "Gеt data from a file":
+                    Console.Write("Enter the path to the file: ");
+                    List<Operation> operationsOfqueue = Parser.Parse(Console.ReadLine());
+                    Console.Clear();
+
+                    MyQueue queue = new MyQueue();
+                    queue.Draw(operationsOfqueue);
+                    Console.ReadKey();
+                    break;
+                default:
+                    Console.WriteLine("Invalid");
                     break;
             }
+        }
+
+        public void PerformStackOperation(string line, MyStack stack)
+        {
+            List<Operation> oper = Parser.ParseStr(line);
+            StructureDisplayer displayer = new StructureDisplayer(oper, stack);
+            displayer.Invoke();
         }
 
         public void PerformStackOperation(int operation, MyStack stack)
