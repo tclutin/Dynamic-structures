@@ -40,7 +40,9 @@ namespace Dynamic_structures
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.ReadKey();
+
             }
             return operations;
         }

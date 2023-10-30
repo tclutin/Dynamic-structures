@@ -45,7 +45,10 @@ namespace Dynamic_structures.Structures
 
         public void Print()
         {
-
+            foreach (var item in list)
+            {
+                Console.WriteLine($"[ {item} ]");
+            }
         }
 
 

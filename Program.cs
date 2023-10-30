@@ -9,16 +9,8 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
-            //var x = Parser.Parse("input.txt");
-
-            //MyQueue queue = new MyQueue();
-            //queue.Draw(x);
-            //StructureDisplayer displayer = new StructureDisplayer(x, new MyStack());
-            //displayer.Invoke();
-            var list = Parser.ParseExpression("postfix.txt");
-            PostfixCalculator calculator = new PostfixCalculator();
-            Console.WriteLine();
-            calculator.Calculate(list, true);
+            GUI gui = new GUI();
+            gui.Start();
         }
     }
 }
