@@ -120,10 +120,23 @@ namespace Dynamic_structures
 
         private void PrintLinkedList()
         {
-            foreach(object item in list)
+            StringBuilder top = new StringBuilder();
+            StringBuilder mid = new StringBuilder();
+            StringBuilder botton = new StringBuilder();
+            int width = 0;
+            int count = 0;
+            foreach (object item in list)
             {
-                Console.Write()
+                count++;
+                width = item.ToString().Length;
+                top.Append("┌" + new string('─', width + 2) + "┐     ");
+                mid.Append("│ " + item + " │ ");
+                if (count < list.Size()) { mid.Append("<-> "); }
+                botton.Append("└" + new string('─', width + 2) + "┘     ");
             }
+            Console.WriteLine(top.ToString());
+            Console.WriteLine(mid.ToString());
+            Console.WriteLine(botton.ToString());
         }
 
         public StringBuilder CreateStackView()
