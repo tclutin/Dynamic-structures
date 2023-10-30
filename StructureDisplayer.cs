@@ -9,10 +9,10 @@ namespace Dynamic_structures
         public List<Operation> commands;
         private MyStack stack;
         private MyQueue queue;
+        private DoublyLinkedList<object> list;
         private int cursorPositionX = -8;
         private int cursorPositionY = 0;
-        private int lineHeight = 0;
-        private int count;
+  
         public StructureDisplayer(List<Operation> commands, MyStack structure) 
         {
             this.commands = commands;
@@ -58,8 +58,7 @@ namespace Dynamic_structures
                     object pop = stack.Pop();
                     if(pop == null) 
                     {
-                        Stop("The stack is empty, cannot Pop");
-                        return; 
+                        throw new Exception("The stack is empty, cannot Pop");
                     }
                     PrintStack("Pop = " + pop);
                     break;
@@ -103,14 +102,6 @@ namespace Dynamic_structures
                     break;
             }
         }
-        private void Stop(string message)
-        {
-            Console.SetCursorPosition(cursorPositionX, cursorPositionY);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(message);
-            Console.ForegroundColor = ConsoleColor.White;
-            commands.Clear();
-        }
 
         private void PrintStack(string operationName)
         {
@@ -125,6 +116,14 @@ namespace Dynamic_structures
             Console.Write(queueView[1].Replace('\r', ' '));
             Console.WriteLine(" <------ " + operationName);
             Console.WriteLine(queueView[2]);
+        }
+
+        private void PrintLinkedList()
+        {
+            foreach(object item in list)
+            {
+                Console.Write()
+            }
         }
 
         public StringBuilder CreateStackView()
