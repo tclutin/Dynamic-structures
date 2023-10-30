@@ -173,7 +173,6 @@ namespace Dynamic_structures
         private void Print(string operationName)
         {
             Console.WriteLine(operationName);
-            //displayer.InvokeCalculator(operationName);
             Console.WriteLine(displayer.CreateStackView());
         }
 

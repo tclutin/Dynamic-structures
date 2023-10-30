@@ -8,24 +8,24 @@ namespace Dynamic_structures.Structures
 {
     public class MyQueue : IStructureV2
     {
-        private DoublyLinkedList<object> list { get; }
+        public DoublyLinkedList<object> List { get; }
 
         public MyQueue()
         { 
-            list = new DoublyLinkedList<object>();
+            List = new DoublyLinkedList<object>();
         }
 
         public void Enqueue(object item)
         {
-            list.AddLast(item);
+            List.AddLast(item);
         }
 
         public void Dequeue()
         {
             if (!IsEmpty())
             {
-                object item = list.getHead().Data;
-                list.Remove(item);
+                object item = List.getHead().Data;
+                List.Remove(item);
             }
         }
 
@@ -33,19 +33,19 @@ namespace Dynamic_structures.Structures
         {
             if (!IsEmpty())
             {
-                return list.getHead().Data;
+                return List.getHead().Data;
             }
             return null;
         }
 
         public bool IsEmpty()
         {
-            return list.Size() == 0;
+            return List.Size() == 0;
         }
 
         public void Print()
         {
-            foreach (var item in list)
+            foreach (var item in List)
             {
                 Console.WriteLine($"[ {item} ]");
             }
