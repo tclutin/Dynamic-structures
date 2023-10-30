@@ -172,7 +172,9 @@ namespace Dynamic_structures
 
         private void Print(string operationName)
         {
-            displayer.InvokeCalculator(operationName);
+            Console.WriteLine(operationName);
+            //displayer.InvokeCalculator(operationName);
+            Console.WriteLine(displayer.CreateStackView());
         }
 
         private bool CheckInfixExpression()

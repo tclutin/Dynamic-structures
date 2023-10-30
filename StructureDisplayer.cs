@@ -110,7 +110,7 @@ namespace Dynamic_structures
                 count = 0;
             }
         }
-        private StringBuilder CreateStackView()
+        public StringBuilder CreateStackView()
         {
             StringBuilder builder = new StringBuilder();
             int columnWidth = FindColumnWidth();
