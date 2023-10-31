@@ -50,53 +50,5 @@ namespace Dynamic_structures.Structures
                 Console.WriteLine($"[ {item} ]");
             }
         }
-
-
-        public void Draw(List<Operation> operations)
-        {
-            MyQueue queue = new MyQueue();
-
-            foreach (var item in operations)
-            {
-                switch (item.Number)
-                {
-                    case 1:
-                        queue.Enqueue(item.Data);
-                        Console.WriteLine($"Enqueued: {item.Data}");
-                        break;
-                    case 2:
-                        if (!queue.IsEmpty())
-                        {
-                            queue.Dequeue();
-                            Console.WriteLine("Dequeued.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Queue is empty. Cannot dequeue.");
-                        }
-                        break;
-                    case 3:
-                        var firstItem = queue.GetFirst();
-                        if (firstItem != null)
-                        {
-                            Console.WriteLine($"First item: {firstItem}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Queue is empty.");
-                        }
-                        break;
-                    case 4:
-                        Console.WriteLine($"Is Empty: {queue.IsEmpty()}");
-                        break;
-                    case 5:
-                        queue.Print();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            queue.Print();
-        }
     }
 }
