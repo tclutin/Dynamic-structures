@@ -143,19 +143,75 @@ namespace Dynamic_structures.Structures
             }
 
             Node<T> secondLast = null;
-            Node<T> last = head;
+            Node<T> current = head;
 
-            while (last.Next != null)
+            while (current.Next != null)
             {
-                secondLast = last;
-                last = last.Next;
+                secondLast = current;
+                current = current.Next;
             }
 
             secondLast.Next = null;
 
-            last.Next = head;
-            head.Previous = last;
-            head = last;
+            current.Next = head;
+            head.Previous = current;
+            head = current;
+        }
+
+        //3
+        public int CountDistinctElements()
+        {
+            HashSet<T> uniqueElements = new HashSet<T>();
+            Node<T> current = head;
+
+            while (current != null)
+            {
+                uniqueElements.Add(current.Data);
+                current = current.Next;
+            }
+
+            return uniqueElements.Count;
+        }
+
+        //4
+        public void RemoveSecondOccurrenceOfElement(T element)
+        {
+            Node<T> current = head;
+            int occurrences = 0;
+
+            while (current != null)
+            {
+                if (current.Data.Equals(element))
+                {
+                    occurrences++;
+                    if (occurrences == 2)
+                    {
+                        if (current.Previous != null)
+                        {
+                            current.Previous.Next = current.Next;
+                        }
+
+                        if (current.Next != null)
+                        {
+                            current.Next.Previous = current.Previous;
+                        }
+
+                        if (head == current)
+                        {
+                            head = current.Next;
+                        }
+
+                        if (tail == current)
+                        {
+                            tail = current.Previous;
+                        }
+
+                        count--;
+                        return;
+                    }
+                }
+                current = current.Next;
+            }
         }
 
         //7

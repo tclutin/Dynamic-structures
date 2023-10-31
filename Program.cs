@@ -9,14 +9,15 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
+
             DoublyLinkedList<object> doublyLinkedList= new DoublyLinkedList<object>();
             doublyLinkedList.AddLast(1);
             doublyLinkedList.AddLast(2);
+            doublyLinkedList.AddLast(4);
             doublyLinkedList.AddLast(3);
             doublyLinkedList.AddLast(4);
-            doublyLinkedList.AddFirst("cat");
 
-            doublyLinkedList.MoveLastToStart();
+            doublyLinkedList.RemoveSecondOccurrenceOfElement(4);
 
             foreach (var item in doublyLinkedList)
             {
@@ -24,6 +25,8 @@ namespace Dynamic_structures
             }
             //GUI gui = new GUI();
             //gui.Start();
+
+
         }
     }
 }
