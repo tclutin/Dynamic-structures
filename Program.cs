@@ -11,11 +11,12 @@ namespace Dynamic_structures
         {
             DoublyLinkedList<object> doublyLinkedList= new DoublyLinkedList<object>();
             doublyLinkedList.AddLast(1);
-            doublyLinkedList.AddLast("56");
-            doublyLinkedList.AddLast(7);
-            doublyLinkedList.AddLast(1);
+            doublyLinkedList.AddLast(2);
+            doublyLinkedList.AddLast(3);
+            doublyLinkedList.AddLast(4);
+            doublyLinkedList.AddFirst("cat");
 
-            doublyLinkedList.SwapElements(1, 7);
+            doublyLinkedList.MoveLastToStart();
 
             foreach (var item in doublyLinkedList)
             {

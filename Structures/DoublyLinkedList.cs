@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace Dynamic_structures.Structures
@@ -110,6 +111,51 @@ namespace Dynamic_structures.Structures
                 }
                 current = current.Next;
             }
+        }
+
+        //1
+        public void Reverse()
+
+        {
+            Node<T> temp = null;
+            Node<T> current = head;
+
+            while (current != null)
+            {
+                temp = current.Previous;
+                current.Previous = current.Next;
+                current.Next = temp;
+                current = current.Previous;
+            }
+
+            if (temp != null)
+            {
+                head = temp.Previous;
+            }
+        }
+
+        //2
+        public void MoveLastToStart()
+        {
+            if (head == null || head.Next == null)
+            {
+                return;
+            }
+
+            Node<T> secondLast = null;
+            Node<T> last = head;
+
+            while (last.Next != null)
+            {
+                secondLast = last;
+                last = last.Next;
+            }
+
+            secondLast.Next = null;
+
+            last.Next = head;
+            head.Previous = last;
+            head = last;
         }
 
         //7
