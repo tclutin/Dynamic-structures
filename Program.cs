@@ -15,9 +15,9 @@ namespace Dynamic_structures
             doublyLinkedList.AddLast(2);
             doublyLinkedList.AddLast(4);
             doublyLinkedList.AddLast(3);
-            doublyLinkedList.AddLast(4);
 
-            doublyLinkedList.RemoveSecondOccurrenceOfElement(4);
+
+            doublyLinkedList.InsertInOrder(21221);
 
             foreach (var item in doublyLinkedList)
             {

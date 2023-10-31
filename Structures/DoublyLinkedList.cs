@@ -143,19 +143,19 @@ namespace Dynamic_structures.Structures
             }
 
             Node<T> secondLast = null;
-            Node<T> current = head;
+            Node<T> last = head;
 
-            while (current.Next != null)
+            while (last.Next != null)
             {
-                secondLast = current;
-                current = current.Next;
+                secondLast = last;
+                last = last.Next;
             }
 
             secondLast.Next = null;
 
-            current.Next = head;
-            head.Previous = current;
-            head = current;
+            last.Next = head;
+            head.Previous = last;
+            head = last;
         }
 
         //3
@@ -212,6 +212,64 @@ namespace Dynamic_structures.Structures
                 }
                 current = current.Next;
             }
+        }
+
+        //5
+        public void InsertListAfterFirstOccurrence(T data, DoublyLinkedList<T> list)
+        {
+            Node<T> current = head;
+            while (current != null)
+            {
+                if (current.Data.Equals(data))
+                {
+                    Node<T> temp = current.Next;
+                    current.Next = list.getHead();
+                    list.getHead().Previous = current;
+                    list.tail.Next = temp;
+                    count += list.Size();
+                    return;
+                }
+                current = current.Next;
+            }
+        }
+
+        //6
+        public void InsertInOrder(T element)
+        {
+            Node<T> newNode = new Node<T>(element);
+
+            if (head == null)
+            {
+                head = newNode;
+                tail = newNode;
+            }
+            else if (Comparer<T>.Default.Compare(element, head.Data) <= 0)
+            {
+                newNode.Next = head;
+                head.Previous = newNode;
+                head = newNode;
+            }
+            else if (Comparer<T>.Default.Compare(element, tail.Data) >= 0)
+            {
+                tail.Next = newNode;
+                newNode.Previous = tail;
+                tail = newNode;
+            }
+            else
+            {
+                Node<T> current = head;
+                while (current != null && Comparer<T>.Default.Compare(element, current.Data) > 0)
+                {
+                    current = current.Next;
+                }
+
+                newNode.Previous = current.Previous;
+                newNode.Next = current;
+                current.Previous.Next = newNode;
+                current.Previous = newNode;
+            }
+
+            count++;
         }
 
         //7
