@@ -28,7 +28,7 @@ namespace Dynamic_structures
             {
                 return;
             }
-            Console.Write("Выражение в постфиксной форме: ");
+            Console.Write("Postfix: ");
             PrintInfix();
             CalculatePostfix();
         }
@@ -183,7 +183,7 @@ namespace Dynamic_structures
             }
             catch
             {
-                Console.WriteLine("Некорректное выражение");
+                Console.WriteLine("Error: Incorrect expression");
                 return false;
             }
             return true;
@@ -206,13 +206,13 @@ namespace Dynamic_structures
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("Некоррекное выражение");
+                        Console.WriteLine("Error: Incorrect expression");
                         return false;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Некорректное выражение");
+                    Console.WriteLine("Error: Incorrect expression");
                     return false;
                 }
             }

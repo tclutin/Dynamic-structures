@@ -72,20 +72,12 @@ namespace Dynamic_structures
             return operations;
         }
 
-        public static List<string>? ParseExpression(string path)
+        public static List<string> ParseExpression(string path)
         {
-            try
-            {
-                StreamReader reader = new StreamReader(path);
-                string? stringFromFile = reader.ReadLine();
-                string[] commands = stringFromFile.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                return commands.ToList();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("File doesn't exist");
-                return null;
-            }
+            StreamReader reader = new StreamReader(path);
+            string? stringFromFile = reader.ReadLine();
+            string[] commands = stringFromFile.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            return commands.ToList();
         }
     }
     public class Operation

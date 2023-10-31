@@ -59,7 +59,14 @@ namespace Dynamic_structures
                         new Item("Back")
                     }
                 },
-                new Item("calc"),
+                new Item("calc")
+                {
+                    SubMenu = new List<Item>
+                    {
+                        new Item("Get data from a filе"),
+                        new Item("Back")
+                    }
+                },
 
                 new Item("Exit")
             };
@@ -173,7 +180,7 @@ namespace Dynamic_structures
                         Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
                         string input1 = Console.ReadLine();
                         Console.Clear();
-                        PerformStackOperation(input1, stack);
+                        PerformOperation(input1, stack);
                     }
                     catch (Exception ex)
                     {
@@ -208,7 +215,43 @@ namespace Dynamic_structures
                         Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
                         string input2 = Console.ReadLine();
                         Console.Clear();
-                        PerformQueueOperation(input2, queue);
+                        PerformOperation(input2, queue);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    Console.ReadKey();
+                    break;
+
+                //calc
+                case "Get data from a filе":
+                    try
+                    {
+                        Console.WriteLine("[1] Postfix\n[2] Infix\n");
+                        Console.Write("Enter the operation: ");
+                        if (int.TryParse(Console.ReadLine(), out int value))
+                        {
+                            if (value < 1 || value > 2)
+                            {
+                                throw new Exception("[1, 2] is range of operation");
+                            }
+
+                            Console.Write("Enter the path to the file: ");
+                            List<string> expression = Parser.ParseExpression(Console.ReadLine());
+                            Console.Clear();
+                            PostfixCalculator calculator = new PostfixCalculator();
+
+                            if (value == 1)
+                            {
+                                calculator.Calculate(expression, false);
+                            }
+                            else
+                            {
+                                calculator.Calculate(expression, true);
+                            }
+                        }
+
                     }
                     catch (Exception ex)
                     {
@@ -222,14 +265,14 @@ namespace Dynamic_structures
             }
         }
 
-        public void PerformStackOperation(string line, MyStack stack)
+        public void PerformOperation(string line, MyStack stack)
         {
             List<Operation> oper = Parser.ParseStr(line);
             StructureDisplayer displayer = new StructureDisplayer(oper, stack);
             displayer.Invoke();
         }
 
-        public void PerformQueueOperation(string line, MyQueue queue)
+        public void PerformOperation(string line, MyQueue queue)
         {
             List<Operation> oper = Parser.ParseStr(line);
             StructureDisplayer displayer = new StructureDisplayer(oper, queue);
