@@ -201,12 +201,20 @@ namespace Dynamic_structures
                     Console.ReadKey();
                     break;
                 case "Еnter the command":
-                    string output2 = "Operations\n[1] Enqueue\n[2] Dequence\n[3] GetFirst\n[4] IsEmpty\n[5] Print\n";
-                    Console.WriteLine(output2);
-                    Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
-                    string input2 = Console.ReadLine();
-                    Console.Clear();
-                    PerformQueueOperation(input2, queue);
+                    try
+                    {
+                        string output2 = "Operations\n[1] Enqueue\n[2] Dequence\n[3] GetFirst\n[4] IsEmpty\n[5] Print\n";
+                        Console.WriteLine(output2);
+                        Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
+                        string input2 = Console.ReadLine();
+                        Console.Clear();
+                        PerformQueueOperation(input2, queue);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    Console.ReadKey();
                     break;
                 default:
                     Console.WriteLine("Invalid");
@@ -225,7 +233,7 @@ namespace Dynamic_structures
         {
             List<Operation> oper = Parser.ParseStr(line);
             StructureDisplayer displayer = new StructureDisplayer(oper, queue);
-            displayer.Invoke();
+            displayer.InvokeQueue();
         }
 
         public void KPrint(string? value)
