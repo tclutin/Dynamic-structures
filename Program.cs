@@ -15,9 +15,9 @@ namespace Dynamic_structures
             doublyLinkedList.AddLast(7);
             doublyLinkedList.AddLast(1);
 
-            var x = doublyLinkedList.DevideByElement("56");
+            doublyLinkedList.SwapElements(1, 7);
 
-            foreach (var item in x)
+            foreach (var item in doublyLinkedList)
             {
                 Console.Write(item);
             }

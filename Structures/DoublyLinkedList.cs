@@ -177,6 +177,7 @@ namespace Dynamic_structures.Structures
         {
             tail.Next = list.getHead();
             list.getHead().Previous = tail;
+            tail = list.tail;
             count += list.Size();
         }
 
