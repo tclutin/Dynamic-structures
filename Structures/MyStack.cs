@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dynamic_structures.Structures
 {
-    public class MyStack : IStructureV1
+    public class MyStack
     {
         public DoublyLinkedList<object> List { get; }
         private Node<object> top = null;
@@ -14,7 +14,7 @@ namespace Dynamic_structures.Structures
         {
             return List.Size();
         }
-        public MyStack() 
+        public MyStack()
         {
             List = new DoublyLinkedList<object>();
         }
@@ -49,38 +49,10 @@ namespace Dynamic_structures.Structures
         }
         public void Print()
         {
-            StringBuilder view = StructureDisplayer.CreateView(this);
-            Console.WriteLine(view);
-        }
-        
-        public StringBuilder CreateStackView()
-        {
-            StringBuilder builder= new StringBuilder();
-            int columnWidth = StructureDisplayer.FindColumnWidth(this);
-            int countLines = 0;
-            builder.AppendLine("┌" + new string('─', columnWidth + 2) + "┐");
             foreach (object item in List)
             {
-                countLines++;
-                builder.AppendLine("│ " + item.ToString().PadLeft(columnWidth) + " │");
-                if(countLines == List.Size()) { break;}
-                builder.AppendLine("├" + new string('─', columnWidth + 2) + "┤");
+                Console.WriteLine(item.ToString());
             }
-            builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
-            return builder;
-        }
-
-        public int FindColumnWidth()
-        {
-            int width = 0;
-            foreach(object item in List)
-            {
-                if (item.ToString().Length > width)
-                {
-                    width = item.ToString().Length; 
-                }
-            }
-            return width;
         }
     }
 }

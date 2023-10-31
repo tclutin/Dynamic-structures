@@ -10,116 +10,177 @@ namespace Dynamic_structures
     public class StructureDisplayer
     {
         public List<Operation> commands;
-        private IStructureV1 structure;
+        private MyStack stack;
+        private MyQueue queue;
+        private DoublyLinkedList<object> list;
         private int cursorPositionX = -8;
         private int cursorPositionY = 0;
-        private int lineHeight = 0;
-        private int count;
-        public StructureDisplayer(List<Operation> commands, IStructureV1 structure) 
+
+        public StructureDisplayer(List<Operation> commands, MyStack structure)
         {
             this.commands = commands;
-            this.structure = structure;
+            this.stack = structure;
+        }
+        public StructureDisplayer(List<Operation> commands, MyQueue queue)
+        {
+            this.commands = commands;
+            this.queue = queue;
+        }
+        public StructureDisplayer(MyStack stack)
+        {
+            this.stack = stack;
+            cursorPositionY = 3;
         }
 
         public void Invoke()
         {
             int iteration = 0;
-            while(commands.Count > 0 && iteration < commands.Count) 
+            while (commands.Count > 0 && iteration < commands.Count)
             {
-                SetCursor();
-                DoOperation(commands[iteration]);
+                DoOperationStack(commands[iteration]);
                 iteration++;
             }
         }
-        private void DoOperation(Operation operation)
+
+        public void InvokeQueue()
         {
-            switch(operation.Number) 
+            for (int i = 0; i < commands.Count; i++)
+            {
+                DoOperationQueue(commands[i]);
+            }
+        }
+        private void DoOperationStack(Operation operation)
+        {
+            switch (operation.Number)
             {
                 case 1:
-                    if (operation.Data == null)
-                    {
-                        throw new Exception("You need to set a value for push operation");
-                    }
-                    structure.Push(operation.Data);
-                    PrintStructure("Push " + operation.Data);
+                    stack.Push(operation.Data);
+                    PrintStack("Push " + operation.Data);
                     break;
                 case 2:
-                    object pop = structure.Pop();
-                    if(pop == null) 
+                    object pop = stack.Pop();
+                    if (pop == null)
                     {
-                        Stop("The stack is empty, cannot Pop");
-                        return; 
+                        throw new Exception("The stack is empty, cannot Pop");
                     }
-                    PrintStructure("Pop = " + pop);
+                    PrintStack("Pop = " + pop);
                     break;
                 case 3:
-                    object top = structure.Top();
-                    PrintStructure("Top = " + top);
+                    object top = stack.Top();
+                    PrintStack("Top = " + top);
                     break;
                 case 4:
-                    bool isEmpty = structure.IsEmpty();
-                    PrintStructure("IsEmpty: " + isEmpty);
+                    bool isEmpty = stack.IsEmpty();
+                    PrintStack("IsEmpty: " + isEmpty);
                     break;
                 case 5:
-                    PrintStructure("Print");
+                    PrintStack("Print");
                     break;
             }
         }
-        private void Stop(string message)
+        private void DoOperationQueue(Operation operation)
         {
-            Console.SetCursorPosition(cursorPositionX, cursorPositionY);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(message);
-            Console.ForegroundColor = ConsoleColor.White;
-            commands.Clear();
+            switch (operation.Number)
+            {
+                case 1:
+                    queue.Enqueue(operation.Data);
+                    PrintQueue("Enqueue " + operation.Data);
+                    break;
+                case 2:
+                    queue.Dequeue();
+                    PrintQueue("Dequeue");
+                    break;
+                case 3:
+                    object first = queue.GetFirst();
+                    PrintQueue("GetFirst : " + first);
+                    break;
+                case 4:
+                    bool isEmpty = queue.IsEmpty();
+                    PrintQueue("IsEmpty : " + isEmpty);
+                    break;
+                case 5:
+                    PrintQueue("Print");
+                    break;
+                default:
+                    break;
+            }
         }
 
-        private void PrintStructure(string operationName)
+        private void PrintStack(string operationName)
         {
-            string[] stackView = CreateView(structure).ToString().Split('\n');
-            Console.SetCursorPosition(cursorPositionX, cursorPositionY);
-            Console.Write(operationName);
-            for (int i = 0; i < stackView.Length; i++)
-            {
-                Console.SetCursorPosition(cursorPositionX, i + cursorPositionY + 1);
-                Console.WriteLine(stackView[i]);
-            }
-            //манипуляция чтобы описание команды не запрыгивало на следуюший стек
-            cursorPositionX += (operationName.Length > stackView[0].Length) ? operationName.Length - stackView[0].Length : 0;
-            //здесь ищу самый длинный столбик чтобы потом перейти на следующую строку нормально
-            lineHeight = Console.GetCursorPosition().Top > lineHeight ? Console.GetCursorPosition().Top : lineHeight;
-            count++;
+            string stackView = CreateStackView().ToString();
+            Console.WriteLine(operationName);
+            Console.WriteLine(stackView);
         }
-        private void SetCursor() 
+        private void PrintQueue(string operationName)
         {
-            cursorPositionX += FindColumnWidth(structure) + 8;
-            if (count == 5) //если уже отрисовалось пять стеков в строке
-            {
-                cursorPositionY = lineHeight;
-                cursorPositionX = 0;
-                count = 0;
-            }
+            string[] queueView = CreateQueueView().ToString().Split('\n');
+            Console.WriteLine(queueView[0]);
+            Console.Write(queueView[1].Replace('\r', ' '));
+            Console.WriteLine(" <------ " + operationName);
+            Console.WriteLine(queueView[2]);
         }
-        public static StringBuilder CreateView(IStructureV1 structure)
+
+        private void PrintLinkedList()
+        {
+            StringBuilder top = new StringBuilder();
+            StringBuilder mid = new StringBuilder();
+            StringBuilder botton = new StringBuilder();
+            int width = 0;
+            int count = 0;
+            foreach (object item in list)
+            {
+                count++;
+                width = item.ToString().Length;
+                top.Append("┌" + new string('─', width + 2) + "┐     ");
+                mid.Append("│ " + item + " │ ");
+                if (count < list.Size()) { mid.Append("<-> "); }
+                botton.Append("└" + new string('─', width + 2) + "┘     ");
+            }
+            Console.WriteLine(top.ToString());
+            Console.WriteLine(mid.ToString());
+            Console.WriteLine(botton.ToString());
+        }
+
+        public StringBuilder CreateStackView()
         {
             StringBuilder builder = new StringBuilder();
-            int columnWidth = FindColumnWidth(structure);
+            int columnWidth = FindColumnWidth();
             int countLines = 0;
             builder.AppendLine("┌" + new string('─', columnWidth + 2) + "┐");
-            foreach (object item in structure.List)
+            foreach (object item in stack.List)
             {
                 countLines++;
                 builder.AppendLine("│ " + item.ToString().PadLeft(columnWidth) + " │");
-                if (countLines == structure.Size()) { break; }
+                if (countLines == stack.Size()) { break; }
                 builder.AppendLine("├" + new string('─', columnWidth + 2) + "┤");
             }
             builder.AppendLine("└" + new string('─', columnWidth + 2) + "┘");
             return builder;
         }
-        public static int FindColumnWidth(IStructureV1 structure)
+
+        private StringBuilder CreateQueueView()
+        {
+            StringBuilder builder = new StringBuilder();
+            int width = FindQueueLength();
+            if (width < 0) width = 5;
+
+            builder.AppendLine("┌" + new string('─', width) + "┐");
+            builder.Append("│ ");
+            foreach (object item in queue.List)
+            {
+                builder.Append(item + " │ ");
+            }
+            builder.Remove(builder.Length - 1, 1);
+            builder.AppendLine();
+            builder.Append("└" + new string('─', width) + "┘");
+            return builder;
+        }
+
+        private int FindColumnWidth()
         {
             int width = 0;
-            foreach (object item in structure.List)
+            foreach (object item in stack.List)
             {
                 if (item.ToString().Length > width)
                 {
@@ -127,6 +188,15 @@ namespace Dynamic_structures
                 }
             }
             return width;
+        }
+        private int FindQueueLength()
+        {
+            int length = queue.List.Size() - 1;
+            foreach (object item in queue.List)
+            {
+                length += item.ToString().Length + 2;
+            }
+            return length;
         }
     }
 }

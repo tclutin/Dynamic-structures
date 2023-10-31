@@ -11,43 +11,42 @@ namespace Dynamic_structures
 {
     public class PostfixCalculator
     {
-        private static string[] operations = {"+", "-", "*", "/", "^", "ln", "cos", "sin", "sqrt" };
+        private static string[] operations = { "+", "-", "*", "/", "^", "ln", "cos", "sin", "sqrt" };
         private List<string> expression;
         private MyStack stack;
+        private StructureDisplayer displayer;
 
         public void Calculate(List<string> expression, bool isInfix)
         {
-            stack= new MyStack();
+            stack = new MyStack();
             this.expression = expression;
-            if (isInfix) //true если выражение в инфиксной форме
-            {
-                if (!CheckInfixExpression()) return;
-                if (!CheckPostfixExpression()) return;
-                Console.Write("Выражение в постфиксной форме: ");
-                PrintInfix();
-            }
-            else if (!CheckPostfixExpression())
+            if (isInfix && !CheckInfixExpression())
             {
                 return;
             }
+            if (!CheckPostfixExpression())
+            {
+                return;
+            }
+            Console.Write("Выражение в постфиксной форме: ");
+            PrintInfix();
             CalculatePostfix();
         }
         public double CalculatePostfix()
         {
             stack = new MyStack();
+            displayer = new StructureDisplayer(stack);
             for (int i = 0; i < expression.Count; i++)
             {
                 if (double.TryParse(expression[i], out double element))
                 {
                     stack.Push(element);
-                    Console.WriteLine("Push " + element);
-                    Console.WriteLine(stack.CreateStackView().ToString());
+                    Print("Push " + element);
                 }
                 else if (IsOperator(expression[i]))
                 {
                     DoOperation(expression[i]);
-                    Console.WriteLine(expression[i]);
-                    Console.WriteLine(stack.CreateStackView().ToString());
+                    Print(expression[i]);
                 }
             }
             return (double)stack.Pop();
@@ -90,7 +89,7 @@ namespace Dynamic_structures
                     break;
                 case "sin":
                     op1 = (double)stack.Pop();
-                    stack.Push(Math.Sin(op1));
+                    stack.Push(Math.Sin(op1 * 0.017));
                     break;
                 case "cos":
                     op1 = (double)stack.Pop();
@@ -109,7 +108,7 @@ namespace Dynamic_structures
             List<string> list = new List<string>();
             stack = new MyStack();
 
-            for(int i = 0; i < expression.Count; i++)
+            for (int i = 0; i < expression.Count; i++)
             {
                 if (double.TryParse(expression[i], out double element))
                 {
@@ -150,24 +149,30 @@ namespace Dynamic_structures
                 case "sin": return 6;
                 case "ln": return 6;
                 case "sqrt": return 6;
-                default: return 6;
+                default: return 0;
             }
         }
         private void CheckBrackets(List<string> list, string op)
         {
-            if(op == "(")
+            if (op == "(")
             {
                 stack.Push(op);
             }
             else if (op == ")")
             {
                 string x = stack.Pop().ToString();
-                while(x != "(")
+                while (x != "(")
                 {
                     list.Add(x);
                     x = stack.Pop().ToString();
                 }
             }
+        }
+
+        private void Print(string operationName)
+        {
+            Console.WriteLine(operationName);
+            Console.WriteLine(displayer.CreateStackView());
         }
 
         private bool CheckInfixExpression()
@@ -215,7 +220,7 @@ namespace Dynamic_structures
         }
         private bool IsOperator(string element)
         {
-            if(operations.Contains(element))
+            if (operations.Contains(element))
             {
                 return true;
             }
@@ -223,9 +228,9 @@ namespace Dynamic_structures
         }
         private void PrintInfix()
         {
-            foreach(string element in expression)
+            foreach (string element in expression)
             {
-                Console.Write(element+ " ");
+                Console.Write(element + " ");
             }
             Console.WriteLine();
         }

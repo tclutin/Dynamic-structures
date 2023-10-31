@@ -168,12 +168,12 @@ namespace Dynamic_structures
                 case "Enter the command":
                     try
                     {
-                        string output = "Operations\n[1] Push\n[2] Pop\n[3] Top\n[4] IsEmpty\n[5] Print\n";
-                        Console.WriteLine(output);
+                        string output1 = "Operations\n[1] Push\n[2] Pop\n[3] Top\n[4] IsEmpty\n[5] Print\n";
+                        Console.WriteLine(output1);
                         Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
-                        string input = Console.ReadLine();
+                        string input1 = Console.ReadLine();
                         Console.Clear();
-                        PerformStackOperation(input, stack);
+                        PerformStackOperation(input1, stack);
                     }
                     catch (Exception ex)
                     {
@@ -190,7 +190,8 @@ namespace Dynamic_structures
                         Console.Write("Enter the path to the file: ");
                         List<Operation> operationsOfqueue = Parser.Parse(Console.ReadLine());
                         Console.Clear();
-
+                        StructureDisplayer displayer = new StructureDisplayer(operationsOfqueue, new MyQueue());
+                        displayer.InvokeQueue();
 
                     }
                     catch (Exception ex)
@@ -198,6 +199,14 @@ namespace Dynamic_structures
                         Console.WriteLine($"Error: {ex.Message}");
                     }
                     Console.ReadKey();
+                    break;
+                case "Еnter the command":
+                    string output2 = "Operations\n[1] Enqueue\n[2] Dequence\n[3] GetFirst\n[4] IsEmpty\n[5] Print\n";
+                    Console.WriteLine(output2);
+                    Console.Write("Example (3 4 1,56 1,7 1,cat 2 5 4): ");
+                    string input2 = Console.ReadLine();
+                    Console.Clear();
+                    PerformQueueOperation(input2, queue);
                     break;
                 default:
                     Console.WriteLine("Invalid");
@@ -212,6 +221,12 @@ namespace Dynamic_structures
             displayer.Invoke();
         }
 
+        public void PerformQueueOperation(string line, MyQueue queue)
+        {
+            List<Operation> oper = Parser.ParseStr(line);
+            StructureDisplayer displayer = new StructureDisplayer(oper, queue);
+            displayer.Invoke();
+        }
 
         public void KPrint(string? value)
         {
