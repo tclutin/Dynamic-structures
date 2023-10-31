@@ -13,7 +13,6 @@ namespace Dynamic_structures
         private MyStack stack;
         private MyQueue queue;
         private DoublyLinkedList<object> list;
-        private int cursorPositionX = -8;
         private int cursorPositionY = 0;
 
         public StructureDisplayer(List<Operation> commands, MyStack structure)
@@ -30,6 +29,10 @@ namespace Dynamic_structures
         {
             this.stack = stack;
             cursorPositionY = 3;
+        }
+        public StructureDisplayer(DoublyLinkedList<object> list)
+        {
+            this.list = list;
         }
 
         public void Invoke()
@@ -121,25 +124,30 @@ namespace Dynamic_structures
             Console.WriteLine(queueView[2]);
         }
 
-        private void PrintLinkedList()
+        public void PrintLinkedList()
         {
+            if (list.Size() == 0)
+            {
+                Console.WriteLine("This list is empty");
+                return;
+            }
             StringBuilder top = new StringBuilder();
             StringBuilder mid = new StringBuilder();
-            StringBuilder botton = new StringBuilder();
+            StringBuilder bottom = new StringBuilder();
             int width = 0;
             int count = 0;
             foreach (object item in list)
             {
                 count++;
                 width = item.ToString().Length;
-                top.Append("┌" + new string('─', width + 2) + "┐     ");
-                mid.Append("│ " + item + " │ ");
-                if (count < list.Size()) { mid.Append("<-> "); }
-                botton.Append("└" + new string('─', width + 2) + "┘     ");
+                top.Append("┌" + new string('─', width + 2) + "┐   ");
+                mid.Append("│ " + item + " │");
+                if (count < list.Size()) { mid.Append("<->"); }
+                bottom.Append("└" + new string('─', width + 2) + "┘   ");
             }
             Console.WriteLine(top.ToString());
             Console.WriteLine(mid.ToString());
-            Console.WriteLine(botton.ToString());
+            Console.WriteLine(bottom.ToString());
         }
 
         public StringBuilder CreateStackView()

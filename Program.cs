@@ -9,8 +9,20 @@ namespace Dynamic_structures
     {
         public static void Main(string[] args)
         {
-            GUI gui = new GUI();
-            gui.Start();
+            DoublyLinkedList<object> doublyLinkedList= new DoublyLinkedList<object>();
+            doublyLinkedList.AddLast(1);
+            doublyLinkedList.AddLast("56");
+            doublyLinkedList.AddLast(7);
+            doublyLinkedList.AddLast(1);
+
+            var x = doublyLinkedList.DevideByElement("56");
+
+            foreach (var item in x)
+            {
+                Console.Write(item);
+            }
+            //GUI gui = new GUI();
+            //gui.Start();
         }
     }
 }
