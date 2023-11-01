@@ -12,7 +12,7 @@ namespace Dynamic_structures
         public List<Operation> commands;
         private MyStack stack;
         private MyQueue queue;
-        private DoublyLinkedList<object> list;
+        //private DoublyLinkedList<object> list;
         private int cursorPositionY = 0;
 
         public StructureDisplayer(List<Operation> commands, MyStack structure)
@@ -30,9 +30,9 @@ namespace Dynamic_structures
             this.stack = stack;
             cursorPositionY = 3;
         }
-        public StructureDisplayer(DoublyLinkedList<object> list)
+        public StructureDisplayer()
         {
-            this.list = list;
+
         }
 
         public void Invoke()
@@ -124,7 +124,7 @@ namespace Dynamic_structures
             Console.WriteLine(queueView[2]);
         }
 
-        public void PrintLinkedList()
+        public static void PrintLinkedList(DoublyLinkedList<object> list)
         {
             if (list.Size() == 0)
             {
