@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Dynamic_structures
 {
@@ -64,6 +65,7 @@ namespace Dynamic_structures
                     SubMenu = new List<Item>
                     {
                         new Item("Get data from a filе"),
+                        new Item("Еnter the commаnd"),
                         new Item("Back")
                     }
                 },
@@ -239,8 +241,8 @@ namespace Dynamic_structures
 
                             Console.Write("Enter the path to the file: ");
                             List<string> expression = Parser.ParseExpression(Console.ReadLine());
-                            Console.Clear();
                             PostfixCalculator calculator = new PostfixCalculator();
+                            Console.Clear();
 
                             if (value == 1)
                             {
@@ -251,7 +253,38 @@ namespace Dynamic_structures
                                 calculator.Calculate(expression, true);
                             }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    Console.ReadKey();
+                    break;
+                case "Еnter the commаnd":
+                    try
+                    {
+                        Console.WriteLine("[1] Postfix\n[2] Infix\n");
+                        Console.Write("Enter the operation: ");
+                        if (int.TryParse(Console.ReadLine(), out int value))
+                        {
+                            if (value < 1 || value > 2)
+                            {
+                                throw new Exception("[1, 2] is range of operation");
+                            }
 
+                            Console.Write("Enter a command: ");
+                            List<string> expression = Parser.ParseExpressionStr(Console.ReadLine());
+                            PostfixCalculator calculator = new PostfixCalculator();
+                            
+                            if (value == 1)
+                            {
+                                calculator.Calculate(expression, false);
+                            }
+                            else
+                            {
+                                calculator.Calculate(expression, true);
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -277,12 +310,6 @@ namespace Dynamic_structures
             List<Operation> oper = Parser.ParseStr(line);
             StructureDisplayer displayer = new StructureDisplayer(oper, queue);
             displayer.InvokeQueue();
-        }
-
-        public void KPrint(string? value)
-        {
-            Console.WriteLine(value);
-            Console.ReadKey();
         }
 
     }

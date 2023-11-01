@@ -79,6 +79,11 @@ namespace Dynamic_structures
             string[] commands = stringFromFile.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             return commands.ToList();
         }
+
+        public static List<string> ParseExpressionStr(string line)
+        {
+            return line.Split(" ").ToList();
+        }
     }
     public class Operation
     {
