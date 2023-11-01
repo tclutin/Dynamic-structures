@@ -214,6 +214,40 @@ namespace Dynamic_structures.Structures
             }
         }
 
+        public void RemoveNonUniqueElements()
+        {
+            Dictionary<T, int> elementCount = new Dictionary<T, int>();
+            Node<T> current = head;
+
+            while (current != null)
+            {
+                if (elementCount.ContainsKey(current.Data))
+                {
+                    elementCount[current.Data]++;
+                }
+                else
+                {
+                    elementCount[current.Data] = 1;
+                }
+                current = current.Next;
+            }
+
+            current = head;
+            while (current != null)
+            {
+                if (elementCount[current.Data] > 1)
+                {
+                    Node<T> temp = current;
+                    current = current.Next;
+                    Remove(temp.Data);
+                }
+                else
+                {
+                    current = current.Next;
+                }
+            }
+        }
+        
         //5
         public void InsertListAfterFirstOccurrence(T data, DoublyLinkedList<T> list)
         {

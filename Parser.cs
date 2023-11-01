@@ -95,6 +95,34 @@ namespace Dynamic_structures
             Number = number;
             Data = data;
         }
+
+        public bool IsBalanced(string expression)
+        {
+            Stack<char> stack = new Stack<char>();
+            Dictionary<char, char> bracketMap = new Dictionary<char, char>
+            {
+                {')', '('},
+                {']', '['},
+                {'}', '{'}
+            };
+
+            foreach (char character in expression)
+            {
+                if (bracketMap.ContainsValue(character))
+                {
+                    stack.Push(character);
+                }
+                else if (bracketMap.ContainsKey(character))
+                {
+                    if (stack.Count == 0 || stack.Pop() != bracketMap[character])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return stack.Count == 0;
+        }
     }
 
 }
