@@ -278,7 +278,8 @@ namespace Dynamic_structures.Structures
             Node<T> current = head;
             while (current != null)
             {
-                if (current.Data.Equals(element))
+                //if (current.Data.Equals(element))
+                if(EqualsString(current.Data, element))
                 {
                     if (current.Previous != null)
                     {
@@ -311,7 +312,8 @@ namespace Dynamic_structures.Structures
             Node<T> current = head;
             while (current != null)
             {
-                if (current.Data.Equals(element))
+                //if (current.Data.Equals(element))
+                if (EqualsString(current.Data, element))
                 {
                     Node<T> newNode = new Node<T>(newElement);
                     newNode.Next = current;
@@ -348,7 +350,7 @@ namespace Dynamic_structures.Structures
             Node<T> current = head;
             while (current != null)
             {
-                if (current.Data.Equals(element))
+                if (EqualsString(current.Data, element))
                 {
                     if (current.Previous == null)
                     {
@@ -395,11 +397,11 @@ namespace Dynamic_structures.Structures
             Node<T> current = head;
             while (current != null)
             {
-                if (current.Data.Equals(element1))
+                if (EqualsString(current.Data, element1))
                 {
                     node1 = current;
                 }
-                else if (current.Data.Equals(element2))
+                else if (EqualsString(current.Data, element2))
                 {
                     node2 = current;
                 }
@@ -479,6 +481,15 @@ namespace Dynamic_structures.Structures
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private static bool EqualsString(T elem1, T elem2)
+        {
+            if (elem1.ToString()== elem2.ToString())
+            { 
+                return true;
+            }
+            return false;
         }
     }
 }

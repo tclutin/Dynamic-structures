@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Xml.Linq;
 
 namespace Dynamic_structures
 {
@@ -31,6 +32,8 @@ namespace Dynamic_structures
         private MyStack stack;
 
         private MyQueue queue;
+
+        private Tests tests = new Tests();
 
         public GUI()
         {
@@ -66,6 +69,19 @@ namespace Dynamic_structures
                     {
                         new Item("Get data from a filе"),
                         new Item("Еnter the commаnd"),
+                        new Item("Back")
+                    }
+                },
+                new Item("doubly list")
+                {
+                    SubMenu = new List<Item>
+                    {
+                        new Item("7. Удаление всех вхождений элемента"),
+                        new Item("8. Вставка элемента newElement перед элементом element"),
+                        new Item("9. Соединение списков"),
+                        new Item("10. Разбиение списка по первому вхождению элемента"),
+                        new Item("11. Удвоение списка"),
+                        new Item("12. Поменять два элемента местами"),
                         new Item("Back")
                     }
                 },
@@ -165,6 +181,16 @@ namespace Dynamic_structures
                         Console.Write("Enter the path to the file: ");
                         List<Operation> operationsOfStack = Parser.Parse(Console.ReadLine());
                         Console.Clear();
+                        foreach (Operation operation in operationsOfStack)
+                        {
+                            if (operation.Number == 1)
+                            {
+                                Console.Write(operation.Number + "," + operation.Data + " ");
+                                continue;
+                            }
+                            Console.Write(operation.Number + " ");
+                        }
+                        Console.WriteLine();
                         StructureDisplayer displayer = new StructureDisplayer(operationsOfStack, new MyStack());
                         displayer.Invoke();
                     }
@@ -290,6 +316,32 @@ namespace Dynamic_structures
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                     }
+                    Console.ReadKey();
+                    break;
+
+                //list
+                case "7. Удаление всех вхождений элемента":
+                    tests.Test7Func();
+                    Console.ReadKey();
+                    break;
+                case "8. Вставка элемента newElement перед элементом element":
+                    tests.Test8Func();
+                    Console.ReadKey();
+                    break;
+                case "9. Соединение списков":
+                    tests.Test9Func();
+                    Console.ReadKey();
+                    break;
+                case "10. Разбиение списка по первому вхождению элемента":
+                    tests.Test10Func();
+                    Console.ReadKey();
+                    break;
+                case "11. Удвоение списка":
+                    tests.Test11Func();
+                    Console.ReadKey();
+                    break;
+                case "12. Поменять два элемента местами":
+                    tests.Test12Func();
                     Console.ReadKey();
                     break;
                 default:
