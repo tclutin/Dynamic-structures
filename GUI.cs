@@ -88,7 +88,7 @@ namespace Dynamic_structures
                         new Item("10. Разбиение списка по первому вхождению элемента"),
                         new Item("11. Удвоение списка"),
                         new Item("12. Поменять два элемента местами"),
-                        new Item("Back")
+                        new Item("Назад")
                     }
                 },
 
