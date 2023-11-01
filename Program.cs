@@ -11,8 +11,11 @@ namespace Dynamic_structures
 
         public static void Main(string[] args)
         {
+
+
             GUI gui = new GUI();
             gui.Start();
+
         }
     }
 }

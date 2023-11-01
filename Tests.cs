@@ -9,6 +9,69 @@ namespace Dynamic_structures
 {
     public class Tests
     {
+        //1
+        public void Test1Func()
+        {
+            DoublyLinkedList<object> list = CreateObjectList();
+            list.Reverse();
+            Console.WriteLine("Список после Reverse:");
+            StructureDisplayer.PrintLinkedList(list);
+        }
+
+        //2
+        public void Test2Func()
+        {
+            DoublyLinkedList<object> list = CreateObjectList();
+            list.MoveLastToStart();
+            Console.WriteLine("Список после замены:");
+            StructureDisplayer.PrintLinkedList(list);
+        }
+
+        //3
+        public void Test3Func()
+        {
+            DoublyLinkedList<object> list = CreateIntList();
+            Console.WriteLine($"Количество уникальных элементов: {list.CountDistinctElements()}");
+        }
+
+        //4
+        public void Test4Func()
+        {
+            DoublyLinkedList<object> list = CreateObjectList();
+            list.RemoveNonUniqueElements();
+            Console.WriteLine("Список после удаления:");
+            StructureDisplayer.PrintLinkedList(list);
+        }
+
+        //5
+        public void Test5Func()
+        {
+            DoublyLinkedList<object> list = CreateObjectList();
+            DoublyLinkedList<object> list2 = CreateObjectList();
+
+            Console.Write("Введите элемент после которого хотите вставить список: ");
+            object elem = Console.ReadLine();
+
+            list.InsertListAfterFirstOccurrence(elem, list2);
+            Console.WriteLine(list.Size());
+            StructureDisplayer.PrintLinkedList(list);
+        }
+        
+        //6
+        public void Test6Func()
+        {
+            int elem = 0;
+            DoublyLinkedList<object> list = CreateIntOrderList();
+            Console.Write("Введите элемент: ");
+            if (!int.TryParse(Console.ReadLine(), out elem))
+            {
+                Console.WriteLine("В следующий раз введите число!");
+                return;
+            }
+            list.InsertInOrder(elem);
+            StructureDisplayer.PrintLinkedList(list);
+        }
+
         //7
         public void Test7Func()
         {
@@ -106,6 +169,20 @@ namespace Dynamic_structures
             list.AddLast(random.Next(100));
             list.AddLast(random.Next(100));
             list.AddLast(random.Next(100));
+            Console.WriteLine("Список:");
+            StructureDisplayer.PrintLinkedList(list);
+            return list;
+        }
+
+        private DoublyLinkedList<object> CreateIntOrderList()
+        {
+            Random random = new Random();
+            DoublyLinkedList<object> list = new DoublyLinkedList<object>();
+            list.AddLast(1);
+            list.AddLast(5);
+            list.AddLast(9);
+            list.AddLast(20);
+            list.AddLast(30);
             Console.WriteLine("Список:");
             StructureDisplayer.PrintLinkedList(list);
             return list;

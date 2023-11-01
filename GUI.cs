@@ -49,33 +49,39 @@ namespace Dynamic_structures
                 {
                     SubMenu = new List<Item>
                     {
-                        new Item("Get data from a file"),
-                        new Item("Enter the command"),
-                        new Item("Back")
+                        new Item("Получить данные с файла"),
+                        new Item("Ввести команды"),
+                        new Item("Назад")
                     }
                 },
                 new Item("queue")
                 {
                     SubMenu = new List<Item>
                     {
-                        new Item("Gеt data from a file"),
-                        new Item("Еnter the command"),
-                        new Item("Back")
+                        new Item("Получить данные с файлa"),
+                        new Item("Ввести комaнды"),
+                        new Item("Назад")
                     }
                 },
                 new Item("calc")
                 {
                     SubMenu = new List<Item>
                     {
-                        new Item("Get data from a filе"),
-                        new Item("Еnter the commаnd"),
-                        new Item("Back")
+                        new Item("Получить дaнные с файла"),
+                        new Item("Ввести кoманды"),
+                        new Item("Назад")
                     }
                 },
                 new Item("doubly list")
                 {
                     SubMenu = new List<Item>
                     {
+                        new Item("1. Перевернуть список"),
+                        new Item("2. Поменять местами последний и первый элемент"),
+                        new Item("3. Вывести количество уникальных элементов"),
+                        new Item("4. Удаление неуникальных элементов"),
+                        new Item("5. Соединение списка после n-ого элемента"),
+                        new Item("6. Вставить элемент в упорядоченную коллекцию"),
                         new Item("7. Удаление всех вхождений элемента"),
                         new Item("8. Вставка элемента newElement перед элементом element"),
                         new Item("9. Соединение списков"),
@@ -144,13 +150,16 @@ namespace Dynamic_structures
         public void PrintLogo()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            string logo = "  ____   _        ____   _   _   _  \r\n / ___| | |      / ___| | | | | | | \r\n| |  _  | |     | |  _  | | | | | | \r\n| |_| | | |___  | |_| | | |_| | | | \r\n \\____| |_____|  \\____|  \\___/  |_| \n\n";
+            string logo = "  _   _      _ _\r\n | | | | ___| | | ___\r\n | |_| |/ _ \\ | |/ _ \\\r\n |  _  |  __/ | | (_) |\r\n |_| |_|\\___|_|_|\\___/";
             Console.WriteLine(logo);
+            Console.WriteLine();
+            Console.WriteLine();
             Console.ResetColor();
         }
 
         public void DrawMenu(List<Item> options)
         {
+            PrintLogo();
             for (int i = 0; i < options.Count; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -175,7 +184,7 @@ namespace Dynamic_structures
             switch (itemName)
             {
                 //stack
-                case "Get data from a file":
+                case "Получить данные с файла":
                     try
                     {
                         Console.Write("Enter the path to the file: ");
@@ -200,7 +209,7 @@ namespace Dynamic_structures
                     }
                     Console.ReadKey();
                     break;
-                case "Enter the command":
+                case "Ввести команды":
                     try
                     {
                         string output1 = "Operations\n[1] Push\n[2] Pop\n[3] Top\n[4] IsEmpty\n[5] Print\n";
@@ -219,7 +228,7 @@ namespace Dynamic_structures
                     break;
 
                 //queue
-                case "Gеt data from a file":
+                case "Получить данные с файлa":
                     try
                     {
                         Console.Write("Enter the path to the file: ");
@@ -235,7 +244,7 @@ namespace Dynamic_structures
                     }
                     Console.ReadKey();
                     break;
-                case "Еnter the command":
+                case "Ввести комaнды":
                     try
                     {
                         string output2 = "Operations\n[1] Enqueue\n[2] Dequence\n[3] GetFirst\n[4] IsEmpty\n[5] Print\n";
@@ -253,7 +262,7 @@ namespace Dynamic_structures
                     break;
 
                 //calc
-                case "Get data from a filе":
+                case "Получить дaнные с файла":
                     try
                     {
                         Console.WriteLine("[1] Postfix\n[2] Infix\n");
@@ -286,7 +295,7 @@ namespace Dynamic_structures
                     }
                     Console.ReadKey();
                     break;
-                case "Еnter the commаnd":
+                case "Ввести кoманды":
                     try
                     {
                         Console.WriteLine("[1] Postfix\n[2] Infix\n");
@@ -320,6 +329,30 @@ namespace Dynamic_structures
                     break;
 
                 //list
+                case "1. Перевернуть список":
+                    tests.Test1Func();
+                    Console.ReadKey();
+                    break;
+                case "2. Поменять местами последний и первый элемент":
+                    tests.Test2Func();
+                    Console.ReadKey();
+                    break;
+                case "3. Вывести количество уникальных элементов":
+                    tests.Test3Func();
+                    Console.ReadKey();
+                    break;
+                case "4. Удаление неуникальных элементов":
+                    tests.Test4Func();
+                    Console.ReadKey();
+                    break;
+                case "5. Соединение списка после n-ого элемента":
+                    tests.Test5Func();
+                    Console.ReadKey();
+                    break;
+                case "6. Вставить элемент в упорядоченную коллекцию":
+                    tests.Test6Func();
+                    Console.ReadKey();
+                    break;
                 case "7. Удаление всех вхождений элемента":
                     tests.Test7Func();
                     Console.ReadKey();
